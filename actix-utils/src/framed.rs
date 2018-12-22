@@ -191,6 +191,20 @@ enum TransportState<S: Service<Request<U>>, U: Encoder + Decoder> {
     Stopping,
 }
 
+use std::sync::atomic::{AtomicUsize, Ordering};
+pub(crate) static MAX_CONN: AtomicUsize = AtomicUsize::new(0);
+
+impl<S, T, U> Drop for FramedTransport<S, T, U>
+where
+    S: Service<Request<U>, Response = Response<U>>,
+    T: AsyncRead + AsyncWrite,
+    U: Encoder + Decoder,
+{
+    fn drop(&mut self) {
+        println!("NEW DROP: {:?}", MAX_CONN.fetch_sub(1, Ordering::Relaxed));
+    }
+}
+
 impl<S, T, U> FramedTransport<S, T, U>
 where
     T: AsyncRead + AsyncWrite,
@@ -201,6 +215,8 @@ where
     <U as Encoder>::Error: 'static,
 {
     pub fn new<F: IntoService<S, Request<U>>>(framed: Framed<T, U>, service: F) -> Self {
+        println!("NEW COUNT: {:?}", MAX_CONN.fetch_add(1, Ordering::Relaxed));
+
         let (write_tx, write_rx) = mpsc::channel(16);
         FramedTransport {
             framed,
