@@ -25,7 +25,7 @@
 
 	default = [ "tokio" ]
 	tokio   = [ "threadpool", "tokio-current-thread", "tokio-executor", "tokio-reactor", "tokio-timer" ]
-	wasm    = [ "wasm-bindgen" ]
+	wasm    = [ "wasm-bindgen-futures" ]
 
 [dependencies]
 
@@ -43,4 +43,4 @@
 	tokio-reactor        = { version = "0.1.7", optional = true }
 	tokio-timer          = { version = "0.2.8", optional = true }
 
-	wasm-bindgen         = { version = "0.2.37", optional = true }
+	wasm-bindgen-futures = { version = "0.3.15", optional = true }

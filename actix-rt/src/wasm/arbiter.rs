@@ -1,5 +1,6 @@
 use futures::{future, Async, Future, IntoFuture, Poll, Stream};
 use futures::sync::oneshot::{channel, Canceled, Sender};
+use wasm_bindgen_futures::{spawn_local};
 
 
 #[ derive( Clone, Debug ) ]
@@ -17,11 +18,11 @@ impl Arbiter
 		Self{}
 	}
 
-	pub fn spawn<F>(_future: F)
+	pub fn spawn<F>( future: F )
 	where
-	  F: Future<Item = (), Error = ()> + 'static,
+		F: Future<Item = (), Error = ()> + 'static,
 	{
-
+		spawn_local( future )
 	}
 
 

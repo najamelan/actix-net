@@ -87,9 +87,27 @@ impl System
 	///
 	/// This allows to customize the runtime. See struct level docs on
 	/// `Builder` for more information.
-	pub fn builder() -> Builder {
-	    Builder::new()
+	///
+	pub fn builder() -> Builder
+	{
+		Builder::new()
 	}
+
+
+	/// This function will start tokio runtime and will finish once the
+	/// `System::stop()` message get called.
+	/// Function `f` get called within tokio runtime context.
+	///
+	pub fn run<F>(f: F) -> std::io::Result<()>
+	where
+	    F: FnOnce() + 'static,
+	{
+		// Self::builder().run(f)
+
+		Ok( f() )
+	}
+
+
 
 	// instance methods
 
@@ -112,16 +130,5 @@ impl System
 	pub fn arbiter( &self ) -> &Arbiter
 	{
 		&self.arbiter
-	}
-
-	/// This function will start tokio runtime and will finish once the
-	/// `System::stop()` message get called.
-	/// Function `f` get called within tokio runtime context.
-	///
-	pub fn run<F>(f: F) -> std::io::Result<()>
-	where
-	    F: FnOnce() + 'static,
-	{
-	    Self::builder().run(f)
 	}
 }
