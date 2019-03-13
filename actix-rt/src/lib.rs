@@ -1,28 +1,27 @@
+#![ allow( unused_imports ) ]
+
 //! A runtime implementation that runs everything on the current thread.
 
-mod arbiter;
-pub mod blocking;
-mod builder;
-mod runtime;
-mod system;
+#[ cfg( feature = "tokio" ) ] mod arbiter;
+#[ cfg( feature = "tokio" ) ] pub mod blocking;
+#[ cfg( feature = "tokio" ) ] mod builder;
+#[ cfg( feature = "tokio" ) ] mod runtime;
+#[ cfg( feature = "tokio" ) ] mod system;
 
-pub use self::arbiter::Arbiter;
-pub use self::builder::{Builder, SystemRunner};
-pub use self::runtime::Runtime;
-pub use self::system::System;
-
-/// Spawns a future on the current arbiter.
-///
-/// # Panics
-///
-/// This function panics if actix system is not running.
-pub fn spawn<F>(f: F)
-where
-    F: futures::Future<Item = (), Error = ()> + 'static,
+#[ cfg( feature = "tokio" ) ]
+//
+pub use
 {
-    if !System::is_set() {
-        panic!("System is not running");
-    }
+	arbiter :: { Arbiter               } ,
+	builder :: { Builder, SystemRunner } ,
+	runtime :: { Runtime               } ,
+	system  :: { System, spawn         } ,
+};
 
-    Arbiter::spawn(f);
-}
+
+// This will export exactly the same things as above.
+//
+#[ cfg( feature = "wasm" ) ] mod wasm;
+#[ cfg( feature = "wasm" ) ] pub use wasm::*;
+
+

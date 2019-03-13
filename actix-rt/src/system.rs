@@ -7,6 +7,24 @@ use futures::sync::mpsc::UnboundedSender;
 use crate::arbiter::{Arbiter, SystemCommand};
 use crate::builder::{Builder, SystemRunner};
 
+
+/// Spawns a future on the current arbiter.
+///
+/// # Panics
+///
+/// This function panics if actix system is not running.
+pub fn spawn<F>(f: F)
+where
+    F: futures::Future<Item = (), Error = ()> + 'static,
+{
+    if !System::is_set() {
+        panic!("System is not running");
+    }
+
+    Arbiter::spawn(f);
+}
+
+
 static SYSTEM_COUNT: AtomicUsize = AtomicUsize::new(0);
 
 /// System is a runtime manager.

@@ -2,11 +2,17 @@ use std::error::Error;
 use std::{fmt, io};
 
 use futures::Future;
-use tokio_current_thread::{self as current_thread, CurrentThread};
-use tokio_executor;
-use tokio_reactor::{self, Reactor};
-use tokio_timer::clock::{self, Clock};
-use tokio_timer::timer::{self, Timer};
+
+#[ cfg( feature = "tokio" ) ]
+//
+use
+{
+    tokio_current_thread::{self as current_thread, CurrentThread},
+    tokio_executor,
+    tokio_reactor::{self, Reactor},
+    tokio_timer::clock::{self, Clock},
+    tokio_timer::timer::{self, Timer},
+};
 
 use crate::builder::Builder;
 
