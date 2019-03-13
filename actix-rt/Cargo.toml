@@ -1,32 +1,37 @@
 [package]
-name = "actix-rt"
-version = "0.2.1"
-authors = ["Nikolay Kim <fafhrd91@gmail.com>"]
-description = "Actix runtime"
-keywords = ["network", "framework", "async", "futures"]
-homepage = "https://actix.rs"
-repository = "https://github.com/actix/actix-net.git"
-documentation = "https://docs.rs/actix-rt/"
-categories = ["network-programming", "asynchronous"]
-license = "MIT/Apache-2.0"
-exclude = [".gitignore", ".travis.yml", ".cargo/config", "appveyor.yml"]
-edition = "2018"
-workspace = "../"
+
+	name          = "actix-rt"
+	version       = "0.2.1"
+	authors       = ["Nikolay Kim <fafhrd91@gmail.com>"]
+	description   = "Actix runtime"
+	keywords      = ["network", "framework", "async", "futures"]
+	homepage      = "https://actix.rs"
+	repository    = "https://github.com/actix/actix-net.git"
+	documentation = "https://docs.rs/actix-rt/"
+	categories    = ["network-programming", "asynchronous"]
+	license       = "MIT/Apache-2.0"
+	exclude       = [".gitignore", ".travis.yml", ".cargo/config", "appveyor.yml"]
+	edition       = "2018"
+	workspace     = "../"
+
 
 [lib]
-name = "actix_rt"
-path = "src/lib.rs"
+
+	name = "actix_rt"
+	path = "src/lib.rs"
+
 
 [dependencies]
-bytes = "0.4"
-derive_more = "0.14"
-futures = "0.1.25"
-parking_lot = "0.7"
-lazy_static = "1.2"
-log = "0.4"
-num_cpus = "1.10"
-threadpool = "1.7"
-tokio-current-thread = "0.1"
-tokio-executor = "0.1.5"
-tokio-reactor = "0.1.7"
-tokio-timer = "0.2.8"
+
+	bytes                = "0.4"
+	derive_more          = "0.14"
+	futures              = "0.1.25"
+	parking_lot          = "0.7"
+	lazy_static          = "1.2"
+	log                  = "0.4"
+	num_cpus             = "1.10"
+	threadpool           = "1.7"
+	tokio-current-thread = "0.1"
+	tokio-executor       = "0.1.5"
+	tokio-reactor        = "0.1.7"
+	tokio-timer          = "0.2.8"
